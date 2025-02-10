@@ -46,7 +46,7 @@ class MyDio {
   }) async {
     try {
       Response resp = await _dio.get(
-        path, // No need to add baseUrl, Dio handles it
+        path,
         queryParameters: queryParameters,
         options: options ??
             Options(

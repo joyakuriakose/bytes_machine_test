@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-
-
 abstract class MyUtils {
   static void hideKeyboard(){
     SystemChannels.textInput.invokeMethod('TextInput.hide');

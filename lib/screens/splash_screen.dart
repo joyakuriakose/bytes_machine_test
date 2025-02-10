@@ -35,10 +35,11 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             SizedBox(height: Get.height * 0.015),
             Text(
-              "welcome".toUpperCase(),
+              "Fruits & Vegs".toUpperCase(),
               style: TextStyle(
                 fontSize: Get.height * 0.037,
                 fontWeight: FontWeight.w500,
+                color: Colors.white
               ),
             ),
           ],

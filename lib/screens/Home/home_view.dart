@@ -1,13 +1,12 @@
+import 'package:bytes_machine_test/utils/my_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import '../../components/app_refresh.dart';
 import '../../components/rounded_loader.dart';
 import '../../utils/my_utils.dart';
 import 'home_controller.dart';
-
 
 class HomeView extends GetView<HomeViewController> {
   const HomeView({Key? key}) : super(key: key);
@@ -29,7 +28,7 @@ class HomeView extends GetView<HomeViewController> {
             appBar: AppBar(
               title: Text(
                 "Vegitables & Fruits",
-                style: TextStyle(
+                style: MyTheme.regularTextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 18,
                   color: Colors.black,
@@ -47,9 +46,7 @@ class HomeView extends GetView<HomeViewController> {
               actions: [
                 IconButton(
                   icon: Icon(Icons.search, color: Colors.black),
-                  onPressed: () {
-                    // Add your notification action here
-                  },
+                  onPressed: () {},
                 ),
               ],
             ),
@@ -61,7 +58,6 @@ class HomeView extends GetView<HomeViewController> {
                   if (controller.isLoading.value) {
                     return Center(child: RoundedLoader());
                   }
-
                   // Extract dynamic types from API and merge with static types
                   List<String> dynamicProductTypes = controller.products
                       .map<String>((product) => product['type'].toString())
@@ -76,12 +72,10 @@ class HomeView extends GetView<HomeViewController> {
                   if (allProductTypes.isEmpty) {
                     return Center(child: Text("No categories available"));
                   }
-
                   return Row(
                     children: [
-                      // Sidebar with Vertical Tabs
                       SizedBox(
-                        width: 80, // Adjusted width
+                        width: Get.width * 0.2,
                         child: SingleChildScrollView(
                           child: Column(
                             children:
@@ -91,13 +85,12 @@ class HomeView extends GetView<HomeViewController> {
                               return GestureDetector(
                                 onTap: () =>
                                     controller.selectedIndex.value = index,
-                                // Handle Click
                                 child: Row(
                                   children: [
                                     Expanded(
                                       child: Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 8.0),
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: Get.height * 0.02),
                                         child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
@@ -105,12 +98,12 @@ class HomeView extends GetView<HomeViewController> {
                                             ClipOval(
                                               child: Image.asset(
                                                 "assets/images/strawberry.jpg",
-                                                width: 70,
-                                                height: 70,
+                                                width: Get.width * 0.185,
+                                                height: Get.height * 0.097,
                                                 fit: BoxFit.cover,
                                               ),
                                             ),
-                                            SizedBox(height: 4),
+                                            SizedBox(height: Get.height * 0.01),
                                             Text(
                                               allProductTypes[index][0]
                                                       .toUpperCase() +
@@ -130,13 +123,11 @@ class HomeView extends GetView<HomeViewController> {
                                         ),
                                       ),
                                     ),
-                                    // Right-side Indicator (Animated)
                                     AnimatedContainer(
-                                      duration: Duration(milliseconds: 300),
-                                      width: isSelected ? 3 : 0,
-                                      height: 50,
-                                      color: Colors.green,
-                                    ),
+                                        duration: Duration(milliseconds: 300),
+                                        width: isSelected ? 3 : 0,
+                                        height: Get.height * 0.1,
+                                        color: Colors.green),
                                   ],
                                 ),
                               );
@@ -144,14 +135,10 @@ class HomeView extends GetView<HomeViewController> {
                           ),
                         ),
                       ),
-
-                      // Main Content Section (Grid View)
                       Expanded(
                         child: Obx(() {
                           if (controller.isLoading.value) {
-                            return Center(
-                                child:
-                                    RoundedLoader()); // Show loading indicator
+                            return Center(child: RoundedLoader());
                           }
 
                           if (controller.products.isEmpty) {
@@ -161,7 +148,6 @@ class HomeView extends GetView<HomeViewController> {
                           var selectedType = allProductTypes.isNotEmpty
                               ? allProductTypes[controller.selectedIndex.value]
                               : "";
-
                           // Show products if selected type exists in API data
                           var filteredProducts = controller.products
                               .where(
@@ -175,8 +161,7 @@ class HomeView extends GetView<HomeViewController> {
                                     maxCrossAxisExtent: 200,
                                     crossAxisSpacing: 10,
                                     mainAxisSpacing: 10,
-                                    childAspectRatio:
-                                        0.55, // Increased height ratio
+                                    childAspectRatio: 0.55,
                                   ),
                                   itemCount: filteredProducts.length,
                                   itemBuilder: (context, index) {
@@ -190,8 +175,8 @@ class HomeView extends GetView<HomeViewController> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Container(
-                                            height:
-                                                100, // Increased image height
+                                            height: Get.height * 0.15,
+                                            // Increased image height
                                             width: double.infinity,
                                             child: Stack(
                                               clipBehavior: Clip.none,
@@ -217,8 +202,12 @@ class HomeView extends GetView<HomeViewController> {
                                                   child: Container(
                                                     padding:
                                                         EdgeInsets.symmetric(
-                                                            horizontal: 12,
-                                                            vertical: 6),
+                                                            horizontal:
+                                                                Get.width *
+                                                                    0.02,
+                                                            vertical:
+                                                                Get.height *
+                                                                    0.01),
                                                     decoration: BoxDecoration(
                                                       color: Colors.white,
                                                       borderRadius:
@@ -250,7 +239,9 @@ class HomeView extends GetView<HomeViewController> {
                                           ),
                                           Padding(
                                             padding: EdgeInsets.only(
-                                                top: 15, left: 8, right: 8),
+                                                top: Get.height * 0.02,
+                                                left: 8,
+                                                right: 8),
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
@@ -323,8 +314,7 @@ class HomeView extends GetView<HomeViewController> {
                                                 SizedBox(height: 5),
                                                 Text(
                                                   product['title'],
-                                                  style: TextStyle(
-                                                    fontSize: 14,
+                                                  style: MyTheme.labelTextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     color: Colors.black,
                                                   ),
@@ -349,7 +339,8 @@ class HomeView extends GetView<HomeViewController> {
                                                     ),
                                                   ],
                                                 ),
-                                                SizedBox(height: 5),
+                                                SizedBox(
+                                                    height: Get.height * 0.001),
                                                 Text(
                                                   "24% off".toUpperCase(),
                                                   style: TextStyle(
@@ -380,7 +371,9 @@ class HomeView extends GetView<HomeViewController> {
                                                         ),
                                                       ],
                                                     ),
-                                                    SizedBox(width: 10),
+                                                    SizedBox(
+                                                        width:
+                                                            Get.width * 0.015),
                                                     Row(
                                                       children: [
                                                         Text(
@@ -419,8 +412,8 @@ class HomeView extends GetView<HomeViewController> {
                                                 ),
                                                 SizedBox(height: 5),
                                                 Container(
-                                                  width: 300,
-                                                  height: 20,
+                                                  width: Get.width * 0.4,
+                                                  height: Get.height * 0.03,
                                                   decoration: BoxDecoration(
                                                     color: Colors.green[100],
                                                     borderRadius:
